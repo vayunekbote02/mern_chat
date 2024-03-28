@@ -1,5 +1,6 @@
 const ConversationModel = require("../models/conversationModel");
 const MessageModel = require("../models/messageModel");
+const { getReceiverSocketId, io } = require("../socket/socket");
 
 const sendMessage = async (req, res) => {
   try {
@@ -25,12 +26,18 @@ const sendMessage = async (req, res) => {
 
     if (newMessage) {
       conversation.messages.push(newMessage._id);
-      await Promise.all([conversation.save(), newMessage.save()]);
     } else {
       return res.status(404).json({ error: "Error in sending message!" });
     }
 
-    res.status(200).json(newMessage);
+    await Promise.all([conversation.save(), newMessage.save()]);
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      // io.to(<socket_id>).emit() used to send events to specific client
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
+    res.status(201).json(newMessage);
   } catch (err) {
     console.log("Error in sendMessage in messageController: ", err.message);
     res.status(500).json({ error: "Internal server error" });
