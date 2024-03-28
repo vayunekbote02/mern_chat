@@ -30,7 +30,7 @@ const sendMessage = async (req, res) => {
       return res.status(404).json({ error: "Error in sending message!" });
     }
 
-    res.status(200).json({ message: "Message sent.", content: newMessage });
+    res.status(200).json(newMessage);
   } catch (err) {
     console.log("Error in sendMessage in messageController: ", err.message);
     res.status(500).json({ error: "Internal server error" });

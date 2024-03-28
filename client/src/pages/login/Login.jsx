@@ -1,6 +1,21 @@
+import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
+import { useState } from "react";
+
 const Login = () => {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(inputs);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
+    <div className="flex flex-col items-center justify-center mx-auto min-w-96">
       <div className="w-full p-6 rounded-lg shadow-2xl">
         <h1 className="text-3xl font-semibold text-center text-base-content">
           Login
@@ -8,13 +23,16 @@ const Login = () => {
 
         <form>
           <div>
-            <label className="label p-2">
+            <label className="p-2 label">
               <span className="text-base label-text">Username</span>
             </label>
             <input
               type="text"
               placeholder="Enter username"
-              className="w-full input input-bordered h-10"
+              className="w-full h-10 input input-bordered"
+              onChange={(e) =>
+                setInputs({ ...inputs, username: e.target.value })
+              }
             />
           </div>
 
@@ -25,19 +43,31 @@ const Login = () => {
             <input
               type="password"
               placeholder="Enter Password"
-              className="w-full input input-bordered h-10"
+              className="w-full h-10 input input-bordered"
+              onChange={(e) =>
+                setInputs({ ...inputs, password: e.target.value })
+              }
             />
           </div>
-          <a
-            href="#"
-            className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
+          <Link
+            to="/signup"
+            className="inline-block mt-2 text-sm hover:underline hover:text-blue-600"
           >
             {"Don't"} have an account?
-          </a>
+          </Link>
 
           <div>
-            <button className="btn btn-primary btn-block btn-sm mt-2">
-              Login
+            <button
+              className="mt-2 btn btn-primary btn-block btn-sm"
+              disabled={loading}
+              type="submit"
+              onClick={handleSubmit}
+            >
+              {loading ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Login"
+              )}
             </button>
           </div>
         </form>

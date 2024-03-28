@@ -33,6 +33,11 @@ const signupController = async (req, res) => {
   try {
     const { fullName, username, password, confirmPassword, gender } = req.body;
 
+    const userExists = await UserModel.findOne({ username });
+    if (userExists) {
+      return res.status(400).json({ error: "User already exists." });
+    }
+
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
     }
