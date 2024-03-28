@@ -5,13 +5,16 @@ import SignUp from "./pages/signup/SignUp.jsx";
 import { Toaster } from "react-hot-toast";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext.jsx";
-// import SetTheme from "./components/SetTheme.jsx";
+import SetTheme from "./components/SetTheme.jsx";
 
 function App() {
   const { authUser } = useContext(AuthContext);
   return (
-    <>
-      <div className="flex items-center justify-center h-screen p-4 bg-base-100">
+    <div className="flex">
+      <div className="flex justify-end flex-shrink h-screen">
+        <SetTheme />
+      </div>
+      <div className="flex items-center justify-center flex-grow h-screen p-3 bg-base-100">
         <Routes>
           <Route
             index
@@ -28,7 +31,7 @@ function App() {
         </Routes>
         <Toaster />
       </div>
-    </>
+    </div>
   );
 }
 

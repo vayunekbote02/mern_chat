@@ -8,7 +8,7 @@ export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { authUser } = useContext(AuthContext);
-
+  // https://mern-chat-ilst.onrender.com
   useEffect(() => {
     if (authUser !== null) {
       const socket = io("https://mern-chat-ilst.onrender.com", {

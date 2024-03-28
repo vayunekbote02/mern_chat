@@ -17,13 +17,13 @@ const SetTheme = () => {
     setTheme(e.target.value);
   };
   return (
-    <div className="dropdown mb-72">
-      <div tabIndex={0} role="button" className="btn m-1">
+    <div className="z-100 dropdown">
+      <div tabIndex={0} role="button" className="m-1 btn">
         Theme
         <svg
           width="12px"
           height="12px"
-          className="h-2 w-2 fill-current opacity-60 inline-block"
+          className="inline-block w-2 h-2 fill-current opacity-60"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 2048 2048"
         >
@@ -39,7 +39,7 @@ const SetTheme = () => {
             <input
               type="radio"
               name="theme-dropdown"
-              className="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+              className="justify-start theme-controller btn btn-sm btn-block btn-ghost"
               aria-label={singleTheme}
               value={singleTheme}
               checked={singleTheme === theme}
